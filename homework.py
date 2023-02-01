@@ -76,9 +76,6 @@ class SportsWalking(Training):
     SPEED_KMH_IN_MS = 0.278
     LEN_SM_IN_M = 100
 
-    action: int
-    duration: float
-    weight: float
     height: float
 
     def get_spent_calories(self) -> float:
@@ -97,9 +94,6 @@ class Swimming(Training):
     CALORIES_MEAN_SPEED_SHIFT = 1.1
     CALORIES_MEAN_SPEED_MULTILPIER = 2
 
-    action: int
-    duration: float
-    weight: float
     length_pool: int
     count_pool: int
 
@@ -120,10 +114,9 @@ def read_package(workout_type: str, data: list) -> Training:
                            'RUN': Running,
                            'WLK': SportsWalking}
 
-    if workout_type in workout_codes.keys():
+    if workout_type in workout_codes:
         return workout_codes[workout_type](*data)
-    else:
-        raise KeyError(f'Not found {workout_type} in dict: workout_codes.')
+    raise ValueError(f'Not found {workout_type} in dict: workout_codes.')
 
 
 def main(training: Training) -> None:
